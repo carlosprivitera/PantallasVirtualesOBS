@@ -16,7 +16,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private int width = 0; // (int) screenSize.getWidth();
     private int height = 0; // (int) screenSize.getHeight();
     private Dimension screenSize = null; 
-    private int altoBarMenuTitulo = 0;
+    //private int altoBarMenuTitulo = 0;
     /** Creates new form VentanaPrincipal */
     public VentanaPrincipal() {
         initComponents();
@@ -24,7 +24,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         width = (int)  screenSize.getWidth();
         height = (int) screenSize.getHeight();
         jLabel2.setText(" - Monitor " + width + ":" + height);
-        altoBarMenuTitulo = jToolBar1.getHeight() + jMenuBar1.getHeight() + getInsets().top; // 37;
+        //altoBarMenuTitulo = this.jToolBar1.getHeight() + this.jMenuBar1.getHeight() + this.getInsets().top; // 37;
     }
 
     /** This method is called from within the constructor to
@@ -378,6 +378,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         //********************
         //this.setSize(x, y + this.jToolBar1.getHeight() + this.jMenuBar1.getHeight() + 37);
         try {
+          int altoBarMenuTitulo = this.jToolBar1.getHeight() + this.jMenuBar1.getHeight() + this.getInsets().top; // 37;  
           this.setTitle("Pantalla virtual " + this.getWidth() + " x " + 
                       (this.getHeight() - altoBarMenuTitulo)); //(this.jToolBar1.getHeight() - this.jMenuBar1.getHeight() - 37)));
         }catch(Exception er) {
@@ -396,25 +397,31 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(Color.DARK_GRAY.getRGB()));
     }//GEN-LAST:event_jMenuItem17ActionPerformed
     private Point jFormPantalla = null;  
-    private int xjFormPantalla;
-    private int yjFormPantalla;
+    private int xjFormPantalla=0;
+    private int yjFormPantalla=0;
     private void formComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentMoved
         // TODO add your handling code here:
-        
-        jFormPantalla = this.getLocationOnScreen();
-        int xjFormPantalla= jFormPantalla.x;
-        int yjFormPantalla = jFormPantalla.y;
+        try {
+          jFormPantalla = this.getLocationOnScreen();
+          xjFormPantalla= jFormPantalla.x;
+          yjFormPantalla = jFormPantalla.y;
+        }catch(Exception er) {
+            
+        }
+        int altoBarMenuTitulo = this.jToolBar1.getHeight() + this.jMenuBar1.getHeight() + this.getInsets().top; // 37;
         
         this.jLabel3.setText(" - OBS recortar pantalla=" + 
                              "Arriba: " + (yjFormPantalla + altoBarMenuTitulo) +
                              " Izquierda: " + xjFormPantalla +
                              " Derecha: " + (width - (xjFormPantalla + getWidth())) +
-                             " Abajo: " + (height - (yjFormPantalla + getHeight())));//jToolBar1.getHeight() - jMenuBar1.getHeight() - 37) )));
+                             " Abajo: " + (height - (yjFormPantalla + getHeight() - altoBarMenuTitulo)));//jToolBar1.getHeight() - jMenuBar1.getHeight() - 37) )));
     }//GEN-LAST:event_formComponentMoved
 
     /**
      * @param args the command line arguments
      */
+    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
