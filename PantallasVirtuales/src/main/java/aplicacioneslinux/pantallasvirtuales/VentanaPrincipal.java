@@ -5,15 +5,26 @@ import java.awt.Color;
 
 import javax.swing.JOptionPane;
 
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Toolkit;
 /**
  *
  * @author carlos
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
-
+    private int width = 0; // (int) screenSize.getWidth();
+    private int height = 0; // (int) screenSize.getHeight();
+    private Dimension screenSize = null; 
+    private int altoBarMenuTitulo = 0;
     /** Creates new form VentanaPrincipal */
     public VentanaPrincipal() {
         initComponents();
+        screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        width = (int)  screenSize.getWidth();
+        height = (int) screenSize.getHeight();
+        jLabel2.setText(" - Monitor " + width + ":" + height);
+        altoBarMenuTitulo = jToolBar1.getHeight() + jMenuBar1.getHeight() + getInsets().top; // 37;
     }
 
     /** This method is called from within the constructor to
@@ -27,6 +38,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jToolBar1 = new javax.swing.JToolBar();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -59,6 +72,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
         addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentMoved(java.awt.event.ComponentEvent evt) {
+                formComponentMoved(evt);
+            }
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 formComponentResized(evt);
             }
@@ -68,6 +84,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jLabel1.setText("x:y");
         jToolBar1.add(jLabel1);
+
+        jLabel2.setText("jLabel2");
+        jToolBar1.add(jLabel2);
+
+        jLabel3.setText("jLabel3");
+        jToolBar1.add(jLabel3);
 
         getContentPane().add(jToolBar1, java.awt.BorderLayout.NORTH);
 
@@ -357,7 +379,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         //this.setSize(x, y + this.jToolBar1.getHeight() + this.jMenuBar1.getHeight() + 37);
         try {
           this.setTitle("Pantalla virtual " + this.getWidth() + " x " + 
-                      (this.getHeight() - this.jToolBar1.getHeight() - this.jMenuBar1.getHeight() - 37));
+                      (this.getHeight() - altoBarMenuTitulo)); //(this.jToolBar1.getHeight() - this.jMenuBar1.getHeight() - 37)));
         }catch(Exception er) {
             
         }
@@ -373,6 +395,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         jPanel1.setBackground(new java.awt.Color(Color.DARK_GRAY.getRGB()));
     }//GEN-LAST:event_jMenuItem17ActionPerformed
+    private Point jFormPantalla = null;  
+    private int xjFormPantalla;
+    private int yjFormPantalla;
+    private void formComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentMoved
+        // TODO add your handling code here:
+        
+        jFormPantalla = this.getLocationOnScreen();
+        int xjFormPantalla= jFormPantalla.x;
+        int yjFormPantalla = jFormPantalla.y;
+        
+        this.jLabel3.setText(" - OBS recortar pantalla=" + 
+                             "Arriba: " + (yjFormPantalla + altoBarMenuTitulo) +
+                             " Izquierda: " + xjFormPantalla +
+                             " Derecha: " + (width - (xjFormPantalla + getWidth())) +
+                             " Abajo: " + (height - (yjFormPantalla + getHeight())));//jToolBar1.getHeight() - jMenuBar1.getHeight() - 37) )));
+    }//GEN-LAST:event_formComponentMoved
 
     /**
      * @param args the command line arguments
@@ -445,6 +483,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
